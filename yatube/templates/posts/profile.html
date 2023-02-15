@@ -5,23 +5,25 @@
 {% endblock %}
 {% block content %}
   <div class="container py-5">
-    <h1>Все посты пользователя {{ author }}</h1>
-    <h3>Всего постов: {{ num_posts }}</h3>
-    {% if following %}
-    <a
-      class="btn btn-lg btn-light"
-      href="{% url 'posts:profile_unfollow' author.username %}" role="button"
-    >
-      Отписаться
-    </a>
-    {% else %}
+    <div class="mb-5">
+      <h1>Все посты пользователя {{ author }}</h1>
+      <h3>Всего постов: {{ num_posts }}</h3>
+      {% if following %}
       <a
-        class="btn btn-lg btn-primary"
-        href="{% url 'posts:profile_follow' author.username %}" role="button"
+        class="btn btn-lg btn-light"
+        href="{% url 'posts:profile_unfollow' author.username %}" role="button"
       >
-        Подписаться
+        Отписаться
       </a>
-    {% endif %}
+      {% else %}
+        <a
+          class="btn btn-lg btn-primary"
+          href="{% url 'posts:profile_follow' author.username %}" role="button"
+        >
+          Подписаться
+        </a>
+      {% endif %}
+    </div>
     {% for post in page_obj %}
       {% include 'posts/includes/for_post_in_page.html' %}
     {% endfor %}

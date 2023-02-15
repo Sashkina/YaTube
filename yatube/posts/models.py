@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.shortcuts import redirect
-
 
 from core.models import CreatedModel
 
@@ -82,8 +80,3 @@ class Follow(models.Model):
         on_delete=models.CASCADE,
         related_name='following',
     )
-
-    def save(self, *args, **kwargs):
-        if self.user == self.author:
-            return redirect('posts:profile', username=self.user.username)
-        return super(Follow, self).save(*args, **kwargs)
