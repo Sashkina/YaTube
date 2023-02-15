@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  Лента подписок
+{% endblock %}
+{% block content %}
+    <div class="container py-5">
+      {% include 'posts/includes/switcher.html' %}
+      {% for post in page_obj %}
+        {% include 'posts/includes/for_post_in_page.html' %}
+      {% endfor %}
+      {% include 'posts/includes/paginator.html' %}
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  Об авторе проекта
+{% endblock %}
+{% block content %}
+<div class="p-3 mb-2 bg-light text-dark">
+  <div class="container py-5">
+    <span style="color:red">
+      <h1>
+        Привет, я автор!
+      </h1>
+    </span>
+    <p>
+      Тут я размещу информацию о себе, используя свои умения верстать. &#128526
+      <br>
+      Я только учусь пока...
+    </p>
+    <p>
+      <a href="https://www.linkedin.com/in/kristinasashkina/" target="_blank" class="btn btn-primary">мой linkedin тут</a>
+    </p>
+    <img src="{% static "img/cat.png" %}"
+  </div>
+</div>
+{% endblock %}
