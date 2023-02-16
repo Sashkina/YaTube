@@ -311,9 +311,9 @@ class FollowingViewsTest(TestCase):
     def test_user_follow_unfollow_another_user(self):
         """Авторизованный пользователь может подписываться
         на других пользователей и удалять их из подписок."""
-        response1 = (self.authorized_client.get(
+        self.authorized_client.get(
             reverse('posts:profile_follow', kwargs={
-                'username': 'ТестАвтор1'}))
+                'username': 'ТестАвтор1'})
         )
         self.assertTrue(
             Follow.objects.filter(
@@ -321,9 +321,9 @@ class FollowingViewsTest(TestCase):
                 author=self.user1,
             ).exists()
         )
-        response2 = (self.authorized_client.get(
+        self.authorized_client.get(
             reverse('posts:profile_unfollow', kwargs={
-                'username': 'ТестАвтор1'}))
+                'username': 'ТестАвтор1'})
         )
         self.assertFalse(
             Follow.objects.filter(
@@ -336,9 +336,9 @@ class FollowingViewsTest(TestCase):
         """Новая запись пользователя появляется в ленте тех,
         кто на него подписан и не появляется в ленте тех,
         кто не подписан."""
-        response = (self.authorized_client.get(
+        self.authorized_client.get(
             reverse('posts:profile_follow', kwargs={
-                'username': 'ТестАвтор1'}))
+                'username': 'ТестАвтор1'})
         )
         response1 = self.authorized_client.get(
             reverse('posts:follow_index'))
