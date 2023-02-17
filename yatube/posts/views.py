@@ -40,14 +40,14 @@ def profile(request, username):
     }
     if request.user.is_anonymous:
         return render(request, 'posts/profile.html', context)
-    else:
-        follow_obj = Follow.objects.filter(
+    following = (
+        Follow.objects.filter(
             user=request.user,
             author=author,
-        )
-        following = True if follow_obj else False
-        context['following'] = following
-        return render(request, 'posts/profile.html', context)
+        ).exists()
+    )
+    context['following'] = following
+    return render(request, 'posts/profile.html', context)
 
 
 def post_detail(request, post_id):
@@ -66,17 +66,15 @@ def post_detail(request, post_id):
 
 @login_required
 def post_create(request):
-    if request.method == 'POST':
-        form = PostForm(
-            request.POST,
-            files=request.FILES or None,
-        )
-        if form.is_valid():
-            new_post = form.save(commit=False)
-            new_post.author = request.user
-            new_post.save()
-            return redirect('posts:profile', request.user)
-        return render(request, 'posts/post_create.html', {'form': form})
+    form = PostForm(
+        request.POST or None,
+        files=request.FILES or None,
+    )
+    if form.is_valid():
+        new_post = form.save(commit=False)
+        new_post.author = request.user
+        new_post.save()
+        return redirect('posts:profile', request.user)
     form = PostForm()
     return render(request, 'posts/post_create.html', {'form': form})
 
@@ -128,14 +126,11 @@ def follow_index(request):
 def profile_follow(request, username):
     author = get_object_or_404(User, username=username)
     user = get_object_or_404(User, username=request.user.username)
-    if user == author:
-        return redirect('posts:profile', username=username)
-    follow_exists = Follow.objects.filter(
-        user=user,
-        author=author,
-    ).exists()
-    if not follow_exists:
-        Follow.objects.create(user=user, author=author)
+    if user != author:
+        Follow.objects.get_or_create(
+            user=user,
+            author=author,
+        )
     return redirect('posts:profile', username=username)
 
 

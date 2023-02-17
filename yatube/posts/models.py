@@ -46,6 +46,11 @@ class Group(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     description = models.TextField()
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['slug',]),
+        ]
+
     def __str__(self) -> str:
         return self.title
 
@@ -80,3 +85,11 @@ class Follow(models.Model):
         on_delete=models.CASCADE,
         related_name='following',
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'author'],
+                name='unique_following',
+            )
+        ]

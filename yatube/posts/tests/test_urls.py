@@ -35,8 +35,8 @@ class PostURLTests(TestCase):
         """Страницы, доступные неавторизованному пользователю."""
         exists_for_guest = {
             '/': HTTPStatus.OK,
-            '/group/test-slug/': HTTPStatus.OK,
-            '/profile/ТестАвтор/': HTTPStatus.OK,
+            f'/group/{self.group.slug}/': HTTPStatus.OK,
+            f'/profile/{self.user.username}/': HTTPStatus.OK,
             f'/posts/{self.post.id}/': HTTPStatus.OK,
             '/unexisting_page/': HTTPStatus.NOT_FOUND,
         }
@@ -61,8 +61,8 @@ class PostURLTests(TestCase):
         """URL-адрес использует соответствующий шаблон."""
         templates_url_names = {
             '/': 'posts/index.html',
-            '/group/test-slug/': 'posts/group_list.html',
-            '/profile/ТестАвтор/': 'posts/profile.html',
+            f'/group/{self.group.slug}/': 'posts/group_list.html',
+            f'/profile/{self.user.username}/': 'posts/profile.html',
             f'/posts/{self.post.id}/': 'posts/post_detail.html',
             '/create/': 'posts/post_create.html',
             f'/posts/{self.post.id}/edit/': 'posts/post_create.html',
