@@ -48,7 +48,7 @@ class Group(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['slug',]),
+            models.Index(fields=['slug', ]),
         ]
 
     def __str__(self) -> str:
