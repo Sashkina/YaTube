@@ -25,10 +25,6 @@
 git clone https://github.com/Sashkina/hw05_final.git
 ```
 
-```
-cd yatube
-```
-
 Cоздать и активировать виртуальное окружение:
 
 ```
@@ -50,6 +46,10 @@ pip install -r requirements.txt
 ```
 
 Выполнить миграции:
+
+```
+cd yatube
+```
 
 ```
 python3 manage.py migrate
